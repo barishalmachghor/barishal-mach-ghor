@@ -1,69 +1,119 @@
 body {
     font-family: Arial, sans-serif;
-    background: #f2f8ff;
+    background: #eef8ff;
     text-align: center;
     margin: 0;
     padding: 20px;
 }
 
+
 h1 {
-    color: #006400;
-    font-size: 35px;
+    color: #00695c;
+    font-size: 38px;
+    margin-bottom: 10px;
 }
+
 
 h2 {
     color: #004d40;
+    margin-top: 30px;
 }
+
 
 p {
     font-size: 18px;
+    color: #333;
 }
+
+
+/* Fish Card */
 
 .fish-card {
     background: white;
-    width: 300px;
+    width: 320px;
     margin: 20px auto;
     padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px #ccc;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px #ccc;
+    transition: 0.3s;
 }
+
+
+.fish-card:hover {
+    transform: translateY(-5px);
+}
+
 
 .fish-card img {
-    border-radius: 10px;
-    max-width: 100%;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
+
+.fish-card h3 {
+    color: #00796b;
+    font-size: 24px;
+}
+
+
+/* Button */
+
 button {
-    background: #008000;
+    background: #00897b;
     color: white;
     border: none;
-    padding: 12px 25px;
-    border-radius: 10px;
+    padding: 14px 30px;
+    border-radius: 25px;
     font-size: 18px;
     cursor: pointer;
 }
 
+
 button:hover {
-    background: #005500;
+    background: #004d40;
 }
 
+
+/* Order Form */
+
+form {
+    background: white;
+    width: 90%;
+    max-width: 350px;
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px #ccc;
+}
+
+
 input, textarea, select {
-    width: 280px;
-    padding: 12px;
-    border-radius: 8px;
+    width: 90%;
+    padding: 13px;
+    margin: 8px;
+    border-radius: 10px;
     border: 1px solid #aaa;
     font-size: 16px;
 }
 
+
 textarea {
-    height: 80px;
+    height: 90px;
 }
 
-form {
-    background: white;
-    width: 330px;
-    margin: auto;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px #ccc;
+
+/* Mobile */
+
+@media(max-width:500px){
+
+    h1{
+        font-size:30px;
+    }
+
+    .fish-card{
+        width:90%;
+    }
+
 }

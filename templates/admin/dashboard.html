@@ -1,72 +1,110 @@
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
 
-    <title>বরিশাল মাছ ঘর - Admin Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<title>Admin Dashboard - বরিশাল মাছ ঘর</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 
 <body>
 
-<h1>🐟 বরিশাল মাছ ঘর - Admin Dashboard</h1>
+<h1>🐟 বরিশাল মাছ ঘর</h1>
 
-<div class="fish-card">
-    <h2>📊 মোট মাছ: {{ total_fish }}</h2>
-</div>
+<h2>⚙️ Admin Dashboard</h2>
 
-<hr>
+
+<a href="/add_fish">
+    <button>
+        ➕ নতুন মাছ যোগ করুন
+    </button>
+</a>
+
+
+<br><br>
+
+
+<a href="/orders">
+    <button>
+        📦 অর্ডার দেখুন
+    </button>
+</a>
+
+
+<br><br>
+
 
 <p>
-    <a href="/add_fish">
-        <button>➕ নতুন মাছ যোগ করুন</button>
-    </a>
-
-    <a href="/logout">
-        <button>🚪 Logout</button>
-    </a>
+মোট মাছ: {{ total_fish }} টি
 </p>
 
-<hr>
 
 <h2>🐟 মাছের তালিকা</h2>
 
-{% if fishes %}
 
 {% for fish in fishes %}
 
 <div class="fish-card">
 
-    <h3>{{ fish.name }}</h3>
 
-    <p><strong>দাম:</strong> ৳ {{ fish.price }} / কেজি</p>
+{% if fish.image %}
 
-    <p><strong>স্টক:</strong> {{ fish.stock }}</p>
-
-    <p><strong>ছবির নাম:</strong> {{ fish.image }}</p>
-
-    <a href="/edit_fish/{{ fish.id }}">
-        <button>✏️ Edit</button>
-    </a>
-
-    <a href="/delete_fish/{{ fish.id }}"
-       onclick="return confirm('আপনি কি এই মাছটি মুছে ফেলতে চান?');">
-        <button>🗑️ Delete</button>
-    </a>
-
-</div>
-
-<hr>
-
-{% endfor %}
-
-{% else %}
-
-<p>এখনো কোনো মাছ যোগ করা হয়নি।</p>
+<img src="{{ url_for('static', filename='images/' + fish.image) }}" width="200">
 
 {% endif %}
 
+
+<h3>
+{{ fish.name }}
+</h3>
+
+
+<p>
+দাম: ৳{{ fish.price }}/কেজি
+</p>
+
+
+<p>
+স্টক: {{ fish.stock }} কেজি
+</p>
+
+
+<a href="/edit_fish/{{ fish.id }}">
+    <button>
+        ✏️ Edit
+    </button>
+</a>
+
+
+<a href="/delete_fish/{{ fish.id }}">
+    <button>
+        🗑 Delete
+    </button>
+</a>
+
+
+</div>
+
+
+{% endfor %}
+
+
+<br>
+
+
+<a href="/logout">
+    <button>
+        🚪 Logout
+    </button>
+</a>
+
+
 </body>
+
 </html>

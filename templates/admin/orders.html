@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>অর্ডার তালিকা - বরিশাল মাছ ঘর</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<h1>🐟 বরিশাল মাছ ঘর</h1>
+
+<h2>📦 কাস্টমার অর্ডার</h2>
+
+
+{% for order in orders %}
+
+<div class="fish-card">
+
+<h3>অর্ডার #{{ order.id }}</h3>
+
+<p>
+<strong>নাম:</strong> {{ order.customer_name }}
+</p>
+
+<p>
+<strong>মোবাইল:</strong> {{ order.phone }}
+</p>
+
+<p>
+<strong>ঠিকানা:</strong> {{ order.address }}
+</p>
+
+<p>
+<strong>মাছ:</strong> {{ order.fish.name }}
+</p>
+
+<p>
+<strong>পরিমাণ:</strong> {{ order.quantity }} কেজি
+</p>
+
+<p>
+<strong>স্ট্যাটাস:</strong> {{ order.status }}
+</p>
+
+
+</div>
+
+
+{% endfor %}
+
+
+</body>
+
+</html>

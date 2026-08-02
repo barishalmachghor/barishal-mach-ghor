@@ -22,9 +22,7 @@ class Order(db.Model):
     customer_name = db.Column(db.String(100))
     phone = db.Column(db.String(20))
     address = db.Column(db.String(300))
-    fish_id = db.Column(db.Integer, db.ForeignKey("fish.id"))
-    fish = db.relationship("Fish")
-
+    fish_id = db.Column(db.Integer)
     quantity = db.Column(db.Integer)
     status = db.Column(db.String(20), default="Pending")
 
@@ -33,26 +31,10 @@ def home():
     fishes = Fish.query.all()
     return render_template("index.html", fishes=fishes)
 
-@app.route("/place_order", methods=["POST"])
-def place_order():
-
-    order = Order(
-        customer_name=request.form.get("name"),
-        phone=request.form.get("phone"),
-        address=request.form.get("address"),
-        fish_id=request.form.get("fish_id"),
-        quantity=request.form.get("quantity")
-    )
-
-    db.session.add(order)
-    db.session.commit()
-
-    return "অর্ডার সফলভাবে গ্রহণ করা হয়েছে"
 
 @app.route("/order")
 def order():
-    fishes = Fish.query.all()
-    return render_template("order.html", fishes=fishes)
+    return render_template("order.html")
 
 
 # Admin Login
@@ -85,22 +67,8 @@ def dashboard():
     return render_template(
         "admin/dashboard.html",
         fishes=fishes,
-        total_fish=total_fish)
-
-# Orders
-@app.route("/orders")
-def orders():
-
-    if not session.get("admin"):
-        return redirect("/admin")
-
-    orders = Order.query.all()
-
-    return render_template(
-        "admin/orders.html",
-        orders=orders
+        total_fish=total_fish
     )
-
 # Add Fish
 @app.route("/add_fish", methods=["GET", "POST"])
 def add_fish():
@@ -172,4 +140,5 @@ with app.app_context():
     db.create_all()
 
 
-app.run(host="0.0.0.0", port=5000, debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
