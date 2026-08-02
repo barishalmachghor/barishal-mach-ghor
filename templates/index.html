@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>বরিশাল মাছ ঘর</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<h1>🐟 বরিশাল মাছ ঘর</h1>
+
+<p>বাংলাদেশের তাজা ও নিরাপদ মাছ আপনার ঘরে পৌঁছে দিচ্ছি</p>
+
+
+<h2>আমাদের জনপ্রিয় মাছ</h2>
+
+
+
+{% for fish in fishes %}
+
+
+<div class="fish-card">
+
+
+{% if fish.image %}
+
+<img src="{{ url_for('static', filename='images/' + fish.image) }}" width="250">
+
+
+{% endif %}
+
+
+<h3>🐟 {{ fish.name }}</h3>
+
+
+<p>
+<strong>দাম:</strong>
+৳ {{ fish.price }} / কেজি
+</p>
+
+
+<a href="/order">
+
+<button>
+অর্ডার করুন
+</button>
+
+</a>
+
+
+</div>
+
+
+{% endfor %}
+
+
+
+</body>
+
+</html>

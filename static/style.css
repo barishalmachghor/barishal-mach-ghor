@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f2f8ff;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #006400;
+    font-size: 35px;
+}
+
+h2 {
+    color: #004d40;
+}
+
+p {
+    font-size: 18px;
+}
+
+.fish-card {
+    background: white;
+    width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px #ccc;
+}
+
+.fish-card img {
+    border-radius: 10px;
+    max-width: 100%;
+}
+
+button {
+    background: #008000;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #005500;
+}
+
+input, textarea, select {
+    width: 280px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #aaa;
+    font-size: 16px;
+}
+
+textarea {
+    height: 80px;
+}
+
+form {
+    background: white;
+    width: 330px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px #ccc;
+}

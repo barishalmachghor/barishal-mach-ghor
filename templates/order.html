@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>অর্ডার - বরিশাল মাছ ঘর</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<h1>🐟 বরিশাল মাছ ঘর</h1>
+
+<h2>📝 অর্ডার ফর্ম</h2>
+
+<form onsubmit="sendOrder(); return false;">
+
+    <p>
+        <input id="name" type="text" placeholder="আপনার নাম" required>
+    </p>
+
+    <p>
+        <input id="phone" type="text" placeholder="মোবাইল নম্বর" required>
+    </p>
+
+    <p>
+        <textarea id="address" placeholder="আপনার ঠিকানা" required></textarea>
+    </p>
+
+    <p>
+        <select id="fish" onchange="calculatePrice()">
+            <option value="ইলিশ মাছ|1800">ইলিশ মাছ - ৳১৮০০/কেজি</option>
+            <option value="রুই মাছ|480">রুই মাছ - ৳৪৮০/কেজি</option>
+            <option value="কাতলা মাছ|550">কাতলা মাছ - ৳৫৫০/কেজি</option>
+            <option value="চিংড়ি|950">চিংড়ি - ৳৯৫০/কেজি</option>
+        </select>
+    </p>
+
+    <p>
+        <input id="quantity" type="number" placeholder="কত কেজি" oninput="calculatePrice()" required>
+    </p>
+
+    <p id="total">
+        মোট দাম: ৳০
+    </p>
+
+    <button type="submit">
+        WhatsApp এ অর্ডার পাঠান
+    </button>
+
+</form>
+
+
+<script>
+
+function calculatePrice(){
+
+    let fishData = document.getElementById("fish").value.split("|");
+
+    let price = Number(fishData[1]);
+
+    let quantity = Number(document.getElementById("quantity").value);
+
+    let total = price * quantity;
+
+    document.getElementById("total").innerHTML =
+    "মোট দাম: ৳" + total;
+
+}
+
+
+function sendOrder(){
+
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    let address = document.getElementById("address").value;
+
+    let fishData = document.getElementById("fish").value.split("|");
+
+    let fish = fishData[0];
+    let price = fishData[1];
+
+    let quantity = document.getElementById("quantity").value;
+
+    let total = Number(price) * Number(quantity);
+
+
+    let message =
+    "🐟 বরিশাল মাছ ঘর অর্ডার%0A%0A" +
+    "নাম: " + name + "%0A" +
+    "মোবাইল: " + phone + "%0A" +
+    "ঠিকানা: " + address + "%0A" +
+    "মাছ: " + fish + "%0A" +
+    "পরিমাণ: " + quantity + " কেজি%0A" +
+    "মোট দাম: ৳" + total;
+
+
+    window.open(
+    "https://wa.me/8801718862209?text=" + message,
+    "_blank"
+    );
+
+}
+
+</script>
+
+
+</body>
+</html>
