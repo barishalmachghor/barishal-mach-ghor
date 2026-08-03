@@ -17,6 +17,17 @@ class Fish(db.Model):
     image = db.Column(db.String(100))
     stock = db.Column(db.Integer, default=0)
 
+class Admin(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+
+    username = db.Column(db.String(100), unique=True, nullable=False)
+
+    password = db.Column(db.String(200), nullable=False)
+
+    phone = db.Column(db.String(20), unique=True)
+
+    role = db.Column(db.String(20), default="super_admin")
+
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     customer_name = db.Column(db.String(100))
@@ -78,11 +89,13 @@ def admin():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        if username == "admin" and password == "12345":
+        admin = Admin.query.filter_by(username=username).first()
+        if admin and admin.password == password:
             session["admin"] = True
+            session["admin_id"] = admin.id
             return redirect("/dashboard")
 
-        return "ভুল Username অথবা Password"
+        return "হঘহভভ Username অথবা Password"
 
     return render_template("admin/login.html")
 
@@ -186,4 +199,5 @@ with app.app_context():
     db.create_all()
 
 
-app.run(host="0.0.0.0", port=5000, debug=True)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
