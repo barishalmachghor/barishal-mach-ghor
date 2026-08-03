@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বরিশাল মাছ ঘর - Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1>🐟 বরিশাল মাছ ঘর - Admin Dashboard</h1>
+
+<p>
+    <a href="/add_fish">
+        <button>➕ নতুন মাছ যোগ করুন</button>
+    </a>
+
+    <a href="/logout">
+        <button>🚪 Logout</button>
+    </a>
+</p>
+
+<hr>
+
+<h2>মাছের তালিকা</h2>
+
+{% if fishes %}
+
+    {% for fish in fishes %}
+
+    <div class="fish-card">
+
+        <h3>{{ fish.name }}</h3>
+
+        <p><strong>দাম:</strong> ৳ {{ fish.price }} / কেজি</p>
+
+        <p><strong>ছবির নাম:</strong> {{ fish.image }}</p>
+
+        <a href="/edit_fish/{{ fish.id }}">
+            <button>✏️ Edit</button>
+        </a>
+
+        <a href="/delete_fish/{{ fish.id }}"
+           onclick="return confirm('আপনি কি এই মাছটি মুছে ফেলতে চান?');">
+            <button>🗑️ Delete</button>
+        </a>
+
+    </div>
+
+    <hr>
+
+    {% endfor %}
+
+{% else %}
+
+    <p>এখনো কোনো মাছ যোগ করা হয়নি।</p>
+
+{% endif %}
+
+</body>
+</html>

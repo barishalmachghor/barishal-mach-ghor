@@ -28,24 +28,10 @@ class Order(db.Model):
     quantity = db.Column(db.Integer)
     status = db.Column(db.String(20), default="Pending")
 
-
-
 @app.route("/")
 def home():
-    search = request.args.get("search", "")
-
-    if search:
-        fishes = Fish.query.filter(
-            Fish.name.ilike(f"%{search}%")
-        ).all()
-    else:
-        fishes = Fish.query.all()
-
-    return render_template(
-        "index.html",
-        fishes=fishes,
-        search=search
-    )
+    fishes = Fish.query.all()
+    return render_template("index.html", fishes=fishes)
 
 @app.route("/place_order", methods=["POST"])
 def place_order():

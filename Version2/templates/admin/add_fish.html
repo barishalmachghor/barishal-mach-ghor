@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মাছ যোগ করুন</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<h1>🐟 নতুন মাছ যোগ করুন</h1>
+
+<form method="POST">
+
+    <input type="text" name="name" placeholder="মাছের নাম" required>
+
+    <br><br>
+
+    <input type="number" name="price" placeholder="দাম (প্রতি কেজি)" required>
+
+    <br><br>
+
+    <input type="number" name="stock" placeholder="স্টক (কেজি)" required>
+
+    <br><br>
+
+    <input type="text" name="image" placeholder="ছবির নাম (যেমন ilish.jpg)">
+
+    <br><br>
+
+    <button type="submit">
+        💾 Save Fish
+    </button>
+
+</form>
+
+<br>
+
+<a href="/dashboard">
+    ⬅ Dashboard এ ফিরে যান
+</a>
+
+</body>
+</html>

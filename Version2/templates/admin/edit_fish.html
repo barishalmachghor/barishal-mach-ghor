@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মাছ সম্পাদনা করুন</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1>✏️ মাছ সম্পাদনা করুন</h1>
+
+<form method="POST">
+
+    <label>মাছের নাম</label><br>
+    <input type="text" name="name" value="{{ fish.name }}" required>
+    <br><br>
+
+    <label>দাম (৳/কেজি)</label><br>
+    <input type="number" name="price" value="{{ fish.price }}" required>
+    <br><br>
+
+    <label>স্টক (কেজি)</label><br>
+    <input type="number" name="stock" value="{{ fish.stock }}" step="0.1" required>
+    <br><br>
+
+    <label>ছবির নাম</label><br>
+    <input type="text" name="image" value="{{ fish.image }}" required>
+    <br><br>
+
+    <button type="submit">💾 Save Changes</button>
+
+</form>
+
+<br>
+
+<a href="/dashboard">
+    <button>⬅️ Dashboard এ ফিরে যান</button>
+</a>
+
+</body>
+</html>
