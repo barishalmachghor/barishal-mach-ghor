@@ -95,10 +95,34 @@ def admin():
             session["admin_id"] = admin.id
             return redirect("/dashboard")
 
-        return "হঘহভভ Username অথবা Password"
+        return "ভুল Username অথবা Password"
 
     return render_template("admin/login.html")
 
+
+@app.route("/forgot-password", methods=["GET", "POST"])
+def forgot_password():
+
+    if request.method == "POST":
+
+        phone = request.form.get("phone")
+        new_password = request.form.get("new_password")
+        confirm_password = request.form.get("confirm_password")
+
+        if new_password != confirm_password:
+            return "দুটি Password এক নয়"
+
+        admin = Admin.query.filter_by(phone=phone).first()
+
+        if not admin:
+            return "এই ফোন নম্বরে কোনো Admin পাওয়া যায়নি"
+
+        admin.password = new_password
+        db.session.commit()
+
+        return "Password সফলভাবে পরিবর্তন হয়েছে"
+
+    return render_template("admin/forgot_password.html")
 
 # Dashboard
 @app.route("/dashboard")
