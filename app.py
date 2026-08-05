@@ -166,6 +166,7 @@ def forgot_password():
 যদি আপনি এই অনুরোধ না করে থাকেন, তাহলে এই ইমেইলটি উপেক্ষা করুন।
 """
 
+        print("MAIL_USERNAME =", app.config["MAIL_USERNAME"])
         mail.send(msg)
 
         return "আপনার Gmail-এ Password Reset Link পাঠানো হয়েছে।"
