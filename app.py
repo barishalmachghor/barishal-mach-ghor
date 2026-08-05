@@ -1,9 +1,39 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 
+from itsdangerous import URLSafeTimedSerializer
 app = Flask(__name__)
 
 app.secret_key = "barishal_mach_ghor_secret"
+
+serializer = URLSafeTimedSerializer(app.secret_key)
+
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+
+app.config["MAIL_USERNAME"] = "saifulislamsazol2209@gmail.com"
+app.config["MAIL_PASSWORD"] = "qlfoalumwsqzqpaq"
+
+app.config["MAIL_DEFAULT_SENDER"] = "saifulislamsazol2209@gmail.com"
+
+mail = Mail(app)
+
+def generate_reset_token(email):
+    return serializer.dumps(email, salt="reset-password")
+
+
+def verify_reset_token(token, expires_sec=1800):
+    try:
+        email = serializer.loads(
+            token,
+            salt="reset-password",
+            max_age=expires_sec
+        )
+        return email
+    except Exception:
+        return None
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///fish.db"
 
@@ -25,7 +55,7 @@ class Admin(db.Model):
     password = db.Column(db.String(200), nullable=False)
 
     phone = db.Column(db.String(20), unique=True)
-
+    email = db.Column(db.String(120), unique=True)
     role = db.Column(db.String(20), default="super_admin")
 
 class Order(db.Model):
@@ -99,30 +129,78 @@ def admin():
 
     return render_template("admin/login.html")
 
-
 @app.route("/forgot-password", methods=["GET", "POST"])
 def forgot_password():
 
     if request.method == "POST":
 
-        phone = request.form.get("phone")
+        email = request.form.get("email").strip().lower()
+
+        print("EMAIL RECEIVED:", email)
+
+        admin = Admin.query.filter_by(email=email).first()
+
+        if not admin:
+            return "এই Gmail দিয়ে কোনো Admin পাওয়া যায়নি"
+
+        token = generate_reset_token(admin.email)
+
+        reset_link = url_for(
+            "reset_password",
+            token=token,
+            _external=True
+        )
+
+        msg = Message(
+            "Barishal Mach Ghor - Password Reset",
+            recipients=[admin.email]
+        )
+
+        msg.body = f"""
+আসসালামু আলাইকুম,
+
+আপনার Password Reset করার অনুরোধ পাওয়া গেছে।
+
+নিচের লিংকে ক্লিক করুন:
+
+{reset_link}
+
+যদি আপনি এই অনুরোধ না করে থাকেন, তাহলে এই ইমেইলটি উপেক্ষা করুন।
+"""
+
+        mail.send(msg)
+
+        return "আপনার Gmail-এ Password Reset Link পাঠানো হয়েছে।"
+
+    return render_template("admin/forgot_password.html")
+
+@app.route("/reset-password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+
+    email = verify_reset_token(token)
+
+    if not email:
+        return "এই Reset Linkটি অবৈধ বা মেয়াদ শেষ হয়ে গেছে।"
+
+    admin = Admin.query.filter_by(email=email).first()
+
+    if not admin:
+        return "Admin পাওয়া যায়নি"
+
+    if request.method == "POST":
+
         new_password = request.form.get("new_password")
         confirm_password = request.form.get("confirm_password")
 
         if new_password != confirm_password:
             return "দুটি Password এক নয়"
 
-        admin = Admin.query.filter_by(phone=phone).first()
-
-        if not admin:
-            return "এই ফোন নম্বরে কোনো Admin পাওয়া যায়নি"
-
         admin.password = new_password
         db.session.commit()
 
-        return "Password সফলভাবে পরিবর্তন হয়েছে"
+        return redirect("/admin")
 
-    return render_template("admin/forgot_password.html")
+    return render_template("admin/reset_password.html")
 
 # Dashboard
 @app.route("/dashboard")
