@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, redirect, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
-
 from itsdangerous import URLSafeTimedSerializer
+import os
 app = Flask(__name__)
 
 app.secret_key = "barishal_mach_ghor_secret"
@@ -12,11 +12,9 @@ serializer = URLSafeTimedSerializer(app.secret_key)
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
-
-app.config["MAIL_USERNAME"] = "saifulislamsazol2209@gmail.com"
-app.config["MAIL_PASSWORD"] = "qlfoalumwsqzqpaq"
-
-app.config["MAIL_DEFAULT_SENDER"] = "saifulislamsazol2209@gmail.com"
+app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
+app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_USERNAME")
 
 mail = Mail(app)
 
