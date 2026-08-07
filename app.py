@@ -3,6 +3,10 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
 import os
+
+from werkzeug.utils import secure_filename
+import uuid
+
 app = Flask(__name__)
 
 app.secret_key = "barishal_mach_ghor_secret"
@@ -12,9 +16,9 @@ serializer = URLSafeTimedSerializer(app.secret_key)
 app.config["MAIL_SERVER"] = "smtp.gmail.com"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
-app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
-app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_USERNAME")
+app.config["MAIL_USERNAME"] = "saifulislamsazol2209@gmail.com"
+app.config["MAIL_PASSWORD"] = "qlfoalumwsqzqpaq"
+app.config["MAIL_DEFAULT_SENDER"] = "saifulislamsazol2209@gmail.com"
 
 mail = Mail(app)
 
@@ -105,8 +109,14 @@ def place_order():
 @app.route("/order")
 def order():
     fishes = Fish.query.all()
-    return render_template("order.html", fishes=fishes)
 
+    fish_id = request.args.get("fish_id", type=int)
+
+    return render_template(
+        "order.html",
+        fishes=fishes,
+        selected_fish_id=fish_id
+    )
 
 # Admin Login
 @app.route("/admin", methods=["GET", "POST"])
@@ -238,11 +248,28 @@ def add_fish():
 
     if request.method == "POST":
 
+        print(request.files)
+
+        image = request.files.get("image")
+        print(image)
+
+        filename = ""
+
+        if image and image.filename != "":
+            filename = str(uuid.uuid4()) + "_" + secure_filename(image.filename)
+
+            upload_folder = os.path.join("static", "uploads")
+
+            if not os.path.exists(upload_folder):
+                os.makedirs(upload_folder)
+
+            image.save(os.path.join(upload_folder, filename))
+
         fish = Fish(
             name=request.form.get("name"),
             price=request.form.get("price"),
             stock=request.form.get("stock"),
-            image=request.form.get("image")
+            image=filename
         )
 
         db.session.add(fish)
@@ -251,7 +278,6 @@ def add_fish():
         return redirect("/dashboard")
 
     return render_template("admin/add_fish.html")
-
 
 # Edit Fish
 @app.route("/edit_fish/<int:id>", methods=["GET", "POST"])
@@ -290,6 +316,21 @@ def delete_fish(id):
     db.session.commit()
 
     return redirect("/dashboard")# Logout
+
+@app.route("/accept_order/<int:id>")
+def accept_order(id):
+
+    if not session.get("admin"):
+        return redirect("/admin")
+
+    order = Order.query.get_or_404(id)
+
+    order.status = "Accepted"
+
+    db.session.commit()
+
+    return redirect("/orders")
+
 @app.route("/logout")
 def logout():
     session.clear()

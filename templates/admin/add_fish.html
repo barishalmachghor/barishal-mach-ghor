@@ -13,7 +13,7 @@
 
 <h1>🐟 নতুন মাছ যোগ করুন</h1>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 
     <input type="text" name="name" placeholder="মাছের নাম" required>
 
@@ -27,7 +27,12 @@
 
     <br><br>
 
-    <input type="text" name="image" placeholder="ছবির নাম (যেমন ilish.jpg)">
+    <label><b>📷 মাছের ছবি নির্বাচন করুন</b></label><br>
+
+    <input
+        type="file"
+        name="image"
+        accept="image/*">
 
     <br><br>
 

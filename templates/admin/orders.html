@@ -49,6 +49,11 @@
 <strong>স্ট্যাটাস:</strong> {{ order.status }}
 </p>
 
+{% if order.status == "Pending" %}
+<a href="{{ url_for('accept_order', id=order.id) }}">
+    <button>✅ Accept</button>
+</a>
+{% endif %}
 
 </div>
 

@@ -35,7 +35,8 @@
 
 {% for fish in fishes %}
 
-<option value="{{ fish.id }}">
+<option value="{{ fish.id }}"
+{% if selected_fish_id == fish.id %}selected{% endif %}>
 {{ fish.name }} - ৳{{ fish.price }}/কেজি
 </option>
 

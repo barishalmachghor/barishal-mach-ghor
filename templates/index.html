@@ -24,7 +24,7 @@
 
 <h2>আমাদের জনপ্রিয় মাছ</h2>
 
-
+<div class="fish-container">
 
 {% for fish in fishes %}
 
@@ -34,7 +34,7 @@
 
 {% if fish.image %}
 
-<img src="{{ url_for('static', filename='images/' + fish.image) }}" width="250">
+<img src="{{ url_for('static', filename='uploads/' + fish.image) }}" width="250">
 
 
 {% endif %}
@@ -48,22 +48,18 @@
 ৳ {{ fish.price }} / কেজি
 </p>
 
-
-<a href="/order">
-
-<button>
-অর্ডার করুন
-</button>
-
+<a href="/order?fish_id={{ fish.id }}">
+    <button>
+        অর্ডার করুন
+    </button>
 </a>
-
 
 </div>
 
 
 {% endfor %}
 
-
+</div>
 
 </body>
 
