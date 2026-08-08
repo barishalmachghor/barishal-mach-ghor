@@ -2,64 +2,836 @@
 <html lang="bn">
 
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বরিশাল মাছ ঘর</title>
 
-<title>বরিশাল মাছ ঘর</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, "Noto Sans Bengali", sans-serif;
+            background: #f4f9f7;
+            color: #17352b;
+        }
+
+        /* HEADER */
+
+        .top-header {
+            background: #00695c;
+            color: white;
+            padding: 14px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.18);
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 38px;
+        }
+
+        .logo h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .logo small {
+            display: block;
+            font-size: 12px;
+            margin-top: 3px;
+            color: #eafff9;
+        }
+
+        .call-btn {
+            background: #ffffff;
+            color: #00695c;
+            padding: 9px 15px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        /* HERO */
+
+        .hero {
+            background:
+                linear-gradient(
+                    rgba(0, 65, 55, 0.90),
+                    rgba(0, 105, 92, 0.90)
+                ),
+                url("https://images.unsplash.com/photo-1544943910-4c1dc44aab44?auto=format&fit=crop&w=1600&q=80");
+
+            background-size: cover;
+            background-position: center;
+
+            min-height: 360px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+            color: white;
+
+            padding: 50px 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.8);
+        }
+
+        .hero p {
+            font-size: 19px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #ffffff;
+            text-shadow: 1px 2px 5px rgba(0,0,0,0.8);
+        }
+
+        .hero-btn {
+            display: inline-block;
+            background: #ffca28;
+            color: #17352b;
+            padding: 13px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 17px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+        }
+
+        /* FEATURES */
+
+        .features {
+            max-width: 1100px;
+            margin: -35px auto 45px;
+            padding: 0 15px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .feature-box {
+            background: white;
+            border-radius: 18px;
+            padding: 22px 15px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            height: 100%;
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .feature-box h4 {
+            font-size: 17px;
+            margin: 5px 0;
+            font-weight: 700;
+        }
+
+        .feature-box p {
+            margin: 0;
+            color: #667a73;
+            font-size: 13px;
+        }
+
+        /* PRODUCTS */
+
+/* SEARCH BOX */
+
+.search-box {
+    max-width: 650px;
+    margin: 0 auto 30px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 14px 20px;
+    border: 2px solid #00897b;
+    border-radius: 30px;
+    font-size: 16px;
+    outline: none;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.search-box input:focus {
+    border-color: #00695c;
+    box-shadow: 0 5px 20px rgba(0,105,92,0.18);
+}
+
+        .products-section {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px 15px 60px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 30px;
+            font-weight: 800;
+            color: #00695c;
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: #71807b;
+            margin: 0;
+        }
+
+        .fish-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            height: 100%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+            border: 1px solid #e2eeea;
+        }
+
+        .fish-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.13);
+        }
+
+        .fish-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .no-image {
+            width: 100%;
+            height: 220px;
+            background: #dff3ef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 65px;
+        }
+
+        .fish-info {
+            padding: 18px;
+        }
+
+        .fish-name {
+            font-size: 21px;
+            font-weight: 800;
+            color: #174b3d;
+            margin-bottom: 8px;
+        }
+
+        .price {
+            color: #e65100;
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .order-btn {
+            display: block;
+            width: 100%;
+            background: #00897b;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            padding: 11px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .order-btn:hover {
+            background: #00695c;
+            color: white;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #073b33;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+        }
+
+        footer h3 {
+            margin-bottom: 8px;
+        }
+
+        footer p {
+            margin: 5px 0;
+            color: #cde5df;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 768px) {
+
+            .logo h1 {
+                font-size: 19px;
+            }
+
+            .logo-icon {
+                font-size: 30px;
+            }
+
+            .call-btn {
+                padding: 7px 11px;
+                font-size: 13px;
+            }
+
+            .hero {
+                min-height: 330px;
+            }
+
+            .hero h2 {
+                font-size: 30px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .fish-image,
+            .no-image {
+                height: 190px;
+            }
+
+            .section-title h2 {
+                font-size: 25px;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            .top-header {
+                padding: 11px 12px;
+            }
+
+            .logo h1 {
+                font-size: 17px;
+            }
+
+            .logo-icon {
+                font-size: 27px;
+            }
+
+            .call-btn {
+                font-size: 12px;
+                padding: 7px 9px;
+            }
+
+            .hero h2 {
+                font-size: 27px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+        }
+
+    </style>
 
 </head>
 
-
 <body>
 
+<!-- HEADER -->
 
-<h1>🐟 বরিশাল মাছ ঘর</h1>
+<header class="top-header">
 
-<p>বাংলাদেশের তাজা ও নিরাপদ মাছ আপনার ঘরে পৌঁছে দিচ্ছি</p>
+    <div class="header-inner">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🐟
+            </div>
+
+            <div>
+                <h1>বরিশাল মাছ ঘর</h1>
+                <small>তাজা মাছ, সরাসরি আপনার ঘরে</small>
+            </div>
+
+        </div>
+
+        <a class="call-btn" href="tel:01XXXXXXXXX">
+            📞 কল করুন
+        </a>
+
+    </div>
+
+</header>
 
 
-<h2>আমাদের জনপ্রিয় মাছ</h2>
+<!-- HERO -->
 
-<div class="fish-container">
+<section class="hero">
 
-{% for fish in fishes %}
+    <div class="hero-content">
+
+        <h2>
+            🐟 তাজা মাছ এখন আপনার ঘরে
+        </h2>
+
+        <p>
+            বরিশালের বাছাই করা তাজা ও নিরাপদ মাছ
+            অনলাইনে অর্ডার করুন।
+            আমরা পৌঁছে দেব আপনার দরজায়।
+        </p>
+
+        <a href="#fish-section" class="hero-btn">
+            🛒 মাছ দেখুন
+        </a>
+
+    </div>
+
+</section>
 
 
-<div class="fish-card">
+<!-- FEATURES -->
+
+<section class="features">
+
+    <div class="row g-3">
+
+        <div class="col-6 col-md-3">
+
+            <div class="feature-box">
+
+                <div class="feature-icon">
+                    🐟
+                </div>
+
+                <h4>তাজা মাছ</h4>
+
+                <p>
+                    প্রতিদিনের তাজা মাছ
+                </p>
+
+            </div>
+
+        </div>
 
 
-{% if fish.image %}
+        <div class="col-6 col-md-3">
 
-<img src="{{ url_for('static', filename='uploads/' + fish.image) }}" width="250">
+            <div class="feature-box">
+
+                <div class="feature-icon">
+                    🛵
+                </div>
+
+                <h4>হোম ডেলিভারি</h4>
+
+                <p>
+                    আপনার ঠিকানায় পৌঁছে দেব
+                </p>
+
+            </div>
+
+        </div>
 
 
-{% endif %}
+        <div class="col-6 col-md-3">
+
+            <div class="feature-box">
+
+                <div class="feature-icon">
+                    💳
+                </div>
+
+                <h4>সহজ পেমেন্ট</h4>
+
+                <p>
+                    bKash, Nagad, Rocket
+                </p>
+
+            </div>
+
+        </div>
 
 
-<h3>🐟 {{ fish.name }}</h3>
+        <div class="col-6 col-md-3">
+
+            <div class="feature-box">
+
+                <div class="feature-icon">
+                    🛡️
+                </div>
+
+                <h4>নিরাপদ সেবা</h4>
+
+                <p>
+                    বিশ্বস্তভাবে অর্ডার করুন
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 
-<p>
-<strong>দাম:</strong>
-৳ {{ fish.price }} / কেজি
-</p>
+<!-- FISH -->
 
-<a href="/order?fish_id={{ fish.id }}">
-    <button>
-        অর্ডার করুন
-    </button>
-</a>
+<section class="products-section" id="fish-section">
+
+<!-- SEARCH BOX -->
+
+<div class="search-box">
+
+    <input
+        type="text"
+        id="fishSearch"
+        placeholder="🔍 মাছের নাম লিখে খুঁজুন..."
+        onkeyup="searchFish()"
+    >
 
 </div>
 
+    <div class="section-title">
 
-{% endfor %}
+        <h2>
+            🐠 আমাদের মাছ
+        </h2>
 
-</div>
+        <p>
+            আপনার পছন্দের মাছ বেছে নিয়ে অর্ডার করুন
+        </p>
+
+    </div>
+
+    <div class="row g-4">
+
+        {% for fish in fishes %}
+
+        <div class="col-12 col-sm-6 col-lg-4">
+
+            <div class="fish-card">
+
+                {% if fish.image %}
+
+                <img
+                    class="fish-image"
+                    src="{{ url_for('static', filename='uploads/' + fish.image) }}"
+                    alt="{{ fish.name }}"
+                >
+
+                {% else %}
+
+                <div class="no-image">
+                    🐟
+                </div>
+
+                {% endif %}
+
+
+                <div class="fish-info">
+
+                    <div class="fish-name">
+                        🐟 {{ fish.name }}
+                    </div>
+
+                    <div class="price">
+                        ৳ {{ fish.price }} / কেজি
+                    </div>
+
+                    <a
+                        class="order-btn"
+                        href="/order?fish_id={{ fish.id }}"
+                    >
+                        🛒 অর্ডার করুন
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% else %}
+
+        <div class="col-12">
+
+            <div class="text-center p-5">
+
+                <h4>
+                    🐟 এখনো কোনো মাছ যোগ করা হয়নি
+                </h4>
+
+                <p>
+                    খুব শীঘ্রই আমাদের মাছের তালিকা আপডেট করা হবে।
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <h3>
+        🐟 বরিশাল মাছ ঘর
+    </h3>
+
+    <p>
+        তাজা মাছ • নিরাপদ সেবা • দ্রুত ডেলিভারি
+    </p>
+
+    <p>
+        © 2026 বরিশাল মাছ ঘর
+    </p>
+
+</footer>
+
+
+<script>
+
+function normalizeText(text) {
+    return text
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, " ");
+}
+
+
+/* বাংলা ↔ English/Banglish পরিচিত নাম */
+const fishAliases = {
+
+    "ilish": ["ইলিশ", "ইলিস", "হিলশা"],
+    "elish": ["ইলিশ", "ইলিস", "হিলশা"],
+    "hilsha": ["ইলিশ", "ইলিস", "হিলশা"],
+
+    "rui": ["রুই", "রোহু"],
+    "rohu": ["রুই", "রোহু"],
+    "rohi": ["রুই", "রোহু"],
+
+    "katla": ["কাতলা"],
+
+    "pangash": ["পাঙ্গাশ", "পাংগাশ"],
+    "pangus": ["পাঙ্গাশ", "পাংগাশ"],
+
+    "koi": ["কই"],
+
+    "tengra": ["টেংরা", "টেংরা মাছ"],
+
+    "boal": ["বোয়াল", "বোয়াল"],
+
+    "chingri": ["চিংড়ি", "চিংড়ি"],
+    "prawn": ["চিংড়ি", "চিংড়ি"],
+    "shrimp": ["চিংড়ি", "চিংড়ি"]
+
+};
+
+
+/* কাছাকাছি বানান বের করার হিসাব */
+
+function levenshtein(a, b) {
+
+    let matrix = [];
+
+    for (let i = 0; i <= b.length; i++) {
+        matrix[i] = [i];
+    }
+
+    for (let j = 0; j <= a.length; j++) {
+        matrix[0][j] = j;
+    }
+
+    for (let i = 1; i <= b.length; i++) {
+
+        for (let j = 1; j <= a.length; j++) {
+
+            if (b.charAt(i - 1) === a.charAt(j - 1)) {
+
+                matrix[i][j] = matrix[i - 1][j - 1];
+
+            } else {
+
+                matrix[i][j] = Math.min(
+                    matrix[i - 1][j - 1] + 1,
+                    matrix[i][j - 1] + 1,
+                    matrix[i - 1][j] + 1
+                );
+
+            }
+
+        }
+
+    }
+
+    return matrix[b.length][a.length];
+
+}
+
+
+function similarity(a, b) {
+
+    if (!a || !b) {
+        return 0;
+    }
+
+    let distance = levenshtein(a, b);
+
+    let maxLength = Math.max(a.length, b.length);
+
+    return 1 - (distance / maxLength);
+
+}
+
+
+function searchFish() {
+
+    let input = normalizeText(
+        document.getElementById("fishSearch").value
+    );
+
+    let cards = document.querySelectorAll(".fish-card");
+
+
+    /* কিছু না লিখলে সব মাছ দেখাবে */
+
+    if (input === "") {
+
+        cards.forEach(function(card) {
+
+            card.parentElement.style.display = "";
+
+        });
+
+        return;
+    }
+
+
+    cards.forEach(function(card) {
+
+        let fishName = normalizeText(
+            card.querySelector(".fish-name").innerText
+        );
+
+        let searchText = input;
+
+        let score = similarity(searchText, fishName);
+
+
+        /* সরাসরি মিল */
+
+        if (fishName.includes(searchText)) {
+            score = 1;
+        }
+
+
+        /* English/Banglish নাম দিয়ে খোঁজা */
+
+        for (let alias in fishAliases) {
+
+            let aliasScore = similarity(searchText, alias);
+
+            if (
+                searchText === alias ||
+                searchText.includes(alias) ||
+                alias.includes(searchText)
+            ) {
+
+                aliasScore = 1;
+
+            }
+
+            if (aliasScore > score) {
+
+                let bengaliNames = fishAliases[alias];
+
+                bengaliNames.forEach(function(name) {
+
+                    let nameScore = similarity(
+                        searchText,
+                        normalizeText(name)
+                    );
+
+                    if (nameScore > score) {
+                        score = nameScore;
+                    }
+
+                });
+
+            }
+
+        }
+
+
+        /*
+        45% বা তার বেশি কাছাকাছি হলে
+        মাছটি দেখাবে
+        */
+
+        if (score >= 0.45) {
+
+            card.parentElement.style.display = "";
+
+        } else {
+
+            card.parentElement.style.display = "none";
+
+        }
+
+    });
+
+}
+
+</script>
 
 </body>
 

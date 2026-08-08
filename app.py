@@ -71,7 +71,7 @@ class Order(db.Model):
     quantity = db.Column(db.Integer)
     status = db.Column(db.String(20), default="Pending")
 
-
+    payment_method = db.Column(db.String(50))
 
 @app.route("/")
 def home():
@@ -98,7 +98,8 @@ def place_order():
         phone=request.form.get("phone"),
         address=request.form.get("address"),
         fish_id=request.form.get("fish_id"),
-        quantity=request.form.get("quantity")
+        quantity=request.form.get("quantity"),
+        payment_method=request.form.get("payment_method")
     )
 
     db.session.add(order)
