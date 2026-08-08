@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request, redirect, session, url_for, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer
@@ -8,6 +8,19 @@ from werkzeug.utils import secure_filename
 import uuid
 
 app = Flask(__name__)
+
+@app.route("/manifest.json")
+def manifest():
+    return send_from_directory("static", "manifest.json")
+
+
+@app.route("/service-worker.js")
+def service_worker():
+    return send_from_directory(
+        "static",
+        "service-worker.js",
+        mimetype="application/javascript"
+    )
 
 app.secret_key = "barishal_mach_ghor_secret"
 
